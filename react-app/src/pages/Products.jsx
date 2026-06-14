@@ -29,10 +29,9 @@ export default function Products() {
     setPage(1);
   }, [categoryFromURL]);
 
-  // ✅ 关键：补上 allCategories（All + New Items + 后端分类）
+  // 关键：补上 allCategories（All + New Items + 后端分类）
   const allCategories = useMemo(() => {
     return ["__all__", "__new__", ...categories];
-
   }, [categories]);
 
   // 1) 拉分类（一次即可）
@@ -57,18 +56,15 @@ export default function Products() {
 
     const currentLang = i18n.language || "en";
 
-    
     const isVirtualNew = category === "__new__";
-
-
 
     const params = { lang: currentLang };
 
     if (isVirtualNew) {
-      // ✅ New Items 是虚拟分类：用 isNewItem 过滤，不传 category
+      // New Items 是虚拟分类：用 isNewItem 过滤，不传 category
       params.isNewItem = true;
     } else if (category !== "__all__") {
-      // ✅ 真实分类：传 category
+      // 真实分类：传 category
       params.category = category;
     }
 
@@ -87,15 +83,14 @@ export default function Products() {
   }, [i18n.language, category]);
 
   const getCategoryLabel = (cat) => {
-  if (cat === "__all__") return t("all");
-  if (cat === "__new__") return t("newItems"); // ✅ 用你已有的 i18n key
-  return t(String(cat).toLowerCase());
-};
-
+    if (cat === "__all__") return t("all");
+    if (cat === "__new__") return t("newItems");
+    return t(String(cat).toLowerCase());
+  };
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 text-base lg:text-lg">
-      {/* 📱 Mobile：底部抽屉 */}
+      {/* Mobile：底部抽屉 */}
       <MobileCategoryBar
         category={category}
         allCategories={allCategories}
@@ -108,7 +103,7 @@ export default function Products() {
         getCategoryLabel={getCategoryLabel}
       />
 
-      {/* 💻 Desktop: 左侧侧栏 */}
+      {/* Desktop: 左侧侧栏 */}
       <aside className="hidden lg:block sticky top-24 max-h-[75vh] overflow-auto bg-base-100 rounded-box shadow-xl p-4 w-60">
         <ul className="menu menu-vertical gap-2 text-xl">
           {allCategories.map((cat) => (
@@ -119,8 +114,8 @@ export default function Products() {
             >
               <span
                 className={`relative inline-block transition-all duration-300
-                  ${category === cat ? "text-black" : "text-gray-400"}
-                  group-hover:text-black
+                  ${category === cat ? "text-black" : "text-black"}
+                  group-hover:text-black font-bold
                   after:absolute after:bottom-0 after:left-0 after:h-[2px]
                   after:bg-black after:w-full after:transition-transform after:duration-300 
                   after:origin-left
@@ -128,7 +123,6 @@ export default function Products() {
                   group-hover:after:scale-x-100`}
               >
                 {getCategoryLabel(cat)}
-
               </span>
             </button>
           ))}
@@ -137,7 +131,9 @@ export default function Products() {
 
       <main className="flex-1">
         {loading ? (
-          <div className="p-4 text-gray-500">{t("loading") || "Loading..."}</div>
+          <div className="p-4 text-gray-500">
+            {t("loading") || "Loading..."}
+          </div>
         ) : (
           <MasonryProducts
             category={category}
@@ -164,8 +160,7 @@ function MobileCategoryBar({
   open,
   setOpen,
   hideTrigger = false,
-  getCategoryLabel={getCategoryLabel}
-
+  getCategoryLabel = { getCategoryLabel },
 }) {
   useEffect(() => {
     if (!open) return;
@@ -175,7 +170,6 @@ function MobileCategoryBar({
   }, [open]);
 
   const label = (cat) => getCategoryLabel(cat);
-
 
   return (
     <>
