@@ -7,7 +7,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   const Menu = (
-    <ul className="menu p-2 lg:menu-horizontal lg:px-1 gap-1 text-base lg:text-xl">
+    <ul className="menu p-2 lg:menu-horizontal lg:px-1 gap-1 text-base lg:text-xl lg:font-bold">
       <li>
         <Link to="/" onClick={() => setOpen(false)}>
           {t("home")}

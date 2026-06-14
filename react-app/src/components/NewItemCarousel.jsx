@@ -20,7 +20,7 @@ export default function NewItemsCarousel() {
   const [snap, setSnap] = useState(false);
   const [speed, setSpeed] = useState(0.3);
 
-  // ✅ 1) 拉 New Items（语言变化也要重新拉）
+  // 拉 New Items（语言变化也要重新拉）
   useEffect(() => {
     let cancelled = false;
 
@@ -38,7 +38,7 @@ export default function NewItemsCarousel() {
     };
   }, [i18n.language]);
 
-  // ✅ 2) 复制一份用于循环（没有数据时返回空数组，但不提前 return）
+  // 复制一份用于循环（没有数据时返回空数组，但不提前 return）
   const itemsForRender = useMemo(() => {
     if (!baseNewItems.length) return [];
     let arr = [...baseNewItems, ...baseNewItems];
@@ -46,7 +46,7 @@ export default function NewItemsCarousel() {
     return arr;
   }, [baseNewItems]);
 
-  // ✅ 3) 动态设定速度
+  // 动态设定速度
   useEffect(() => {
     const mqs = {
       md: window.matchMedia?.("(min-width: 768px)"),
@@ -77,7 +77,7 @@ export default function NewItemsCarousel() {
     };
   }, []);
 
-  // ✅ 4) 自动滚动（如果没有 items，就不滚）
+  // 自动滚动（如果没有 items，就不滚）
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -103,7 +103,7 @@ export default function NewItemsCarousel() {
     return () => cancelAnimationFrame(rafRef.current);
   }, [paused, speed, itemsForRender.length]);
 
-  // ✅ 5) snap debounce（保持你原逻辑）
+  // snap debounce
   const debounceOffSnap = (() => {
     let timer;
     return () => {
@@ -112,7 +112,7 @@ export default function NewItemsCarousel() {
     };
   })();
 
-  // ✅ 6) 这里再决定渲染什么（不会影响 hooks 顺序）
+  // 这里再决定渲染什么（不会影响 hooks 顺序）
   if (!itemsForRender.length) return null;
 
   return (
@@ -165,7 +165,7 @@ export default function NewItemsCarousel() {
               to={{
                 pathname: "/products",
                 search: `?category=${encodeURIComponent(
-                  item.category
+                  item.category,
                 )}&highlight=${encodeURIComponent(item.id)}`,
               }}
               className="flex-shrink-0 w-[140px] sm:w-[180px] md:w-[220px] lg:w-[260px]"
@@ -180,7 +180,7 @@ export default function NewItemsCarousel() {
                   decoding="async"
                   draggable="false"
                 />
-                <div className="p-1.5 sm:p-2 md:p-3 text-center text-[10px] sm:text-xs md:text-sm font-medium text-gray-700">
+                <div className="p-1.5 sm:p-2 md:p-3 text-center text-[10px] sm:text-xs md:text-sm font-bold text-black">
                   {item.name}
                 </div>
               </div>
@@ -191,4 +191,3 @@ export default function NewItemsCarousel() {
     </section>
   );
 }
-

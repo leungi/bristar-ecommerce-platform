@@ -28,9 +28,10 @@ export default function MasonryProducts({
 
     const q = normalize(searchTerm);
 
-    const normalizedCat = String(category || "").toLowerCase().trim();
+    const normalizedCat = String(category || "")
+      .toLowerCase()
+      .trim();
     const isVirtualNew = category === "__new__";
-
 
     let filtered = [];
 
@@ -50,13 +51,15 @@ export default function MasonryProducts({
       } else if (isVirtualNew) {
         const seen = new Set();
         filtered = products.filter(
-          (p) => p.isNewItem && !seen.has(p.id) && seen.add(p.id)
+          (p) => p.isNewItem && !seen.has(p.id) && seen.add(p.id),
         );
       } else {
         filtered = products.filter(
           (p) =>
             p.category?.toLowerCase().trim() ===
-            String(category || "").toLowerCase().trim()
+            String(category || "")
+              .toLowerCase()
+              .trim(),
         );
       }
     }
@@ -65,7 +68,7 @@ export default function MasonryProducts({
     filtered.sort((a, b) =>
       sortOrder === "asc"
         ? (a.name || "").localeCompare(b.name || "")
-        : (b.name || "").localeCompare(a.name || "")
+        : (b.name || "").localeCompare(a.name || ""),
     );
 
     // 高亮项提前
@@ -124,7 +127,9 @@ export default function MasonryProducts({
     return items;
   }, [page, totalPages, maxItems]);
 
-  const normalizedCat = String(category || "").toLowerCase().trim();
+  const normalizedCat = String(category || "")
+    .toLowerCase()
+    .trim();
   const isVirtualNew = normalizedCat.includes("new item");
 
   return (
@@ -170,7 +175,7 @@ export default function MasonryProducts({
           <button
             key={p.slug || p.id}
             onClick={() => {
-              // ✅ 如果当前在 New Items 页面，保持 category 不变，只更新 highlight
+              // 如果当前在 New Items 页面，保持 category 不变，只更新 highlight
               const catForUrl = isVirtualNew ? category : p.category;
               setSearchParams({ category: catForUrl, highlight: p.id });
 
@@ -191,11 +196,13 @@ export default function MasonryProducts({
               />
             </figure>
             <div className="card-body p-3">
-              <h3 className="card-title text-sm md:text-xl line-clamp-2">
+              <h3 className="card-title text-sm md:text-xl text-black line-clamp-2">
                 {p.name}
               </h3>
-              <p className="text-sm text-gray-600 line-clamp-2">{p.desc}</p>
-              <p className="text-[11px] text-gray-400 mt-auto">{p.code}</p>
+              <p className="card-title ext-sm text-black line-clamp-2">
+                {p.desc}
+              </p>
+              <p className="text-[11px] text-black mt-auto">{p.code}</p>
             </div>
           </button>
         ))}
@@ -224,7 +231,7 @@ export default function MasonryProducts({
                   >
                     {it}
                   </Button>
-                )
+                ),
               )}
 
               <Button
@@ -246,4 +253,3 @@ export default function MasonryProducts({
     </>
   );
 }
-
