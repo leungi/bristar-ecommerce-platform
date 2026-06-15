@@ -34,6 +34,10 @@ app.use("/api/admin/products", adminProductsRoute);
 const adminUsersRoute = require("./routes/adminUsersRoute");
 app.use("/api/admin/users", adminUsersRoute);
 
+app.use("/api/brands", require("./routes/brandsRoute"));
+
+app.use("/api/admin/brands", require("./routes/adminBrandsRoute"));
+
 const s3Route = require("./routes/s3Route");
 app.use("/api/admin/s3", s3Route);
 

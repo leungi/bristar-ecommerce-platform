@@ -54,6 +54,10 @@ export default function AdminNav({ admin }) {
             Products
           </Link>
 
+          <Link to="/admin/brands" style={linkStyle("/admin/brands")}>
+            Brands
+          </Link>
+
           {admin?.role === "super" && (
             <Link to="/admin/users" style={linkStyle("/admin/users")}>
               Manage Admins
