@@ -39,11 +39,36 @@ export const adminProducts = {
     }),
 };
 
+export const adminBrands = {
+  list: () => request("/api/admin/brands"),
+
+  create: (data) =>
+    request("/api/admin/brands", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+
+  update: (id, data) =>
+    request(`/api/admin/brands/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
+
+  remove: (id) =>
+    request(`/api/admin/brands/${id}`, {
+      method: "DELETE",
+    }),
+};
+
 export const adminS3 = {
-  presignPut: (filename, contentType) =>
+  presignPut: (filename, contentType, folder = "products") =>
     request("/api/admin/s3/presign-put", {
       method: "POST",
-      body: JSON.stringify({ filename, contentType }),
+      body: JSON.stringify({
+        filename,
+        contentType,
+        folder,
+      }),
     }),
   deleteObject: (key) =>
     request("/api/admin/s3/delete", {

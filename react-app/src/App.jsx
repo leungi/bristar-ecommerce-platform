@@ -17,6 +17,7 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminUsers from "./pages/admin/AdminUsers";
 import SuperOnly from "./pages/admin/SuperOnly";
+import AdminBrands from "./pages/admin/AdminBrands";
 
 function PublicLayout() {
   return (
@@ -49,6 +50,7 @@ function App() {
         {/* admin 后台 */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminProducts />} />
+          <Route path="brands" element={<AdminBrands />} />
           <Route
             path="users"
             element={
