@@ -150,7 +150,31 @@ export default function ProductForm({
       setErr("");
       setSaving(true);
 
+      // 1. If we are in "create" mode, check if the item already exists in the backend database
+      let finalMode = mode;
       if (mode === "create") {
+        try {
+          // Attempt to find if the slug exists by querying the list or a single endpoint
+          const checkRes = await adminProducts.list(form.slug);
+          const exactMatch = checkRes?.products?.find((p) => p.slug === form.slug);
+          
+          if (exactMatch) {
+            const confirmOverwrite = window.confirm(
+              `A product with the slug "${form.slug}" already exists. Do you want to overwrite it?`
+            );
+            if (!confirmOverwrite) {
+              setSaving(false);
+              return; // Cancel execution if user changes their mind
+            }
+            finalMode = "edit"; // Switch logic to update/overwrite
+          }
+        } catch (e) {
+          console.warn("Could not verify duplicate slug, proceeding with creation.", e);
+        }
+      }
+
+      // 2. Route the save request to the correct API endpoint based on finalMode
+      if (finalMode === "create") {
         await adminProducts.create(form);
       } else {
         await adminProducts.update(form.slug, form);
